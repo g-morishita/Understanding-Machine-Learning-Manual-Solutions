@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\newcounter{problem}
+\newcounter{solution}
+
+\newcommand\Problem{%
+  \stepcounter{problem}%
+  \textbf{\theproblem.}~%
+  \setcounter{solution}{0}%
+}
+
+\newcommand\TheSolution{%
+  \textbf{Solution:}\\%
+}
+
+\newcommand\ASolution{%
+  \stepcounter{solution}%
+  \textbf{Solution \thesolution:}\\%
+}
+\parindent 0in
+\parskip 1em
+\begin{document}
+\section{Chapter 2}
+\Problem Show that given a training set $S=\{(x_i, f(x_i))\}_{i=1}^m \subset (\mathrm{R}^d \times \{0, 1\})^m$, there exists a polynomial $p_S$ such that
+$h_S(x) = 1$ if and only if $p_S(x) \geq 0$, where $h_S$ is as defined as follows:
+
+\begin{equation}
+    h_S(x) = 
+    \left\{
+    \begin{array}{ll}
+    f(x_i) & \textrm{ if } \exists i \in [m] \quad x_i = x \\
+    0 & \textrm{ otherwise} \\
+    \end{array}
+    \right.
+\end{equation}
+
+\TheSolution 
+Let $y_i = f(x_i)$. Define $p_S$ as follows:
+
+\begin{equation}
+    p_S(x) = - \Pi_{i:y_i=1}\|x - x_i\|.
+\end{equation}
+
+Therefore, for every $i$ such that $y_i = 1$, $p_S(x_i) = 0$. For every other $x$, $p_S(x) < 0$.
+
+\end{document}
+
+% \documentclass{article}
+% \usepackage[utf8]{inputenc}
+% 
+% \title{Understanding Machine Learning | Manual Solutions}
+% \author{Gota Morishita}
+% \date{June 2021}
+% 
+% \usepackage{natbib}
+% \usepackage{graphicx}
+% \usepackage{comment}
+% 
+% \begin{document}
+% 
+% \maketitle
+% 
+% This is my manual solutions of Understanding Machine Learning\cite{shalev2014understanding}.
+% \section{Chapter 3}
+% 
+% \subsection{Exercise}
+% Firstly, let me show that for any $\delta \in (0, 1)$, $0 < \epsilon_1 < \epsilon_2 < 1$, we have $m_\mathcal{H}(\delta, \epsilon_1) \ge m_\mathcal{H}(\delta, \epsilon_2)$.
+% 
+% Since $\mathcal{H}$ is (non-agnostic) PAC learnable, there is a learning algorithm $A$ such that for any training set $S$ with $m_\mathcal{H}(\delta, \epsilon_1)$ samples and any data distribution $\mathcal{D}$, at least with probability $1-\delta$, we have 
+% $$
+% L_\mathcal{D}(A(S)) < \epsilon_1.
+% $$
+% Since $\epsilon_1 < \epsilon_2$, $\forall S$ with $m_\mathcal{H}(\delta, \epsilon_1)$ and $\forall \mathcal{D}$, at least with probability $1-\delta$, we have
+% $$
+% L_\mathcal{D}(A(S)) < \epsilon_2.
+% $$
+% That could hold even when the sample size is less than $m_\mathcal{H}(\delta, \epsilon_1)$. Therefore, $m_\mathcal{H}(\delta, \epsilon_1) > m_\mathcal{H}(\delta, \epsilon_2)$.
+% 
+% Secondly, let me show that for any $\epsilon \in (0, 1)$, $0 < \delta_1 < \delta_2 < 1$, we have $m_\mathcal{H}(\delta_1, \epsilon) \ge m_\mathcal{H}(\delta_2, \epsilon)$.
+% 
+% Since $\mathcal{H}$ is (non-agnostic) PAC learnable, there is a learning algorithm $A$ such that for any training set $S$ with $m_\mathcal{H}(\delta_1, \epsilon)$ samples and any data distribution $\mathcal{D}$, at least with probability $1-\delta_1$, we have 
+% $$
+% L_\mathcal{D}(A(S)) < \epsilon.
+% $$
+% 
+% Since $\delta_1 < \delta_2$, $\forall S$ with $m_\mathcal{H}(\delta_1, \epsilon)$ and $\forall \mathcal{D}$, at least with probability $1-\delta_2$, we have
+% $$
+% L_\mathcal{D}(A(S)) < \epsilon.
+% $$
+% That could hold even when the sample size is less than $m_\mathcal{H}(\delta_1, \epsilon)$. Therefore, $m_\mathcal{H}(\delta_1, \epsilon) > m_\mathcal{H}(\delta_2, \epsilon)$.
+% 
+% \subsection{Exercise}
+% 1. If there is a positive sample $x_+$ in a given training set $S$, an algorithm outputs $h_{x_+}$. Otherwise, it outputs $h^-$.
+% Obviously, this algorithm is an ERM algorithm. 
+% 
+% 
+% 2. Take any distribution $\mathcal{D}$ over $\mathcal{X}$. Also, take any $\delta, \epsilon$ as the approximation and accuracy parameters. Let $p_+$ be a probability of sampling a positive sample, that is,
+% 
+% $$p_+ = \mathcal{D}[\{x_+\}].$$
+% 
+% If a positive sample appears in a training set $S$, a hypothesis that the algorithm described above outputs achieves the zero risk. If there is no positive sample in $S$, the risk becomes $p_+$. Therefore, if $p_+ < \epsilon$, with probability 1, we achieve that the true risk is less than $\epsilon$, thus leading to the fact that the sample complexity is 0. If $p_+ > \epsilon$, we need to sample a positive instance to make the true risk smaller than $\epsilon$. Let $m$ be the sample size. The probability that you fail to sample a positive one is $(1-p_+)^m.$ Since $p_+ > \epsilon$ and the approximation parameter $\delta$, it suffices to have
+% 
+% $$
+% (1-p_+)^m < (1-\epsilon)^m < e^{-\epsilon m} < \delta,
+% $$
+% in order for $\mathcal{H}_{singleton}$ to be PAC learnable
+% 
+% Hence, the upper bound on the sample complexity is $\left \lceil{\frac{\log{(1/\delta)}}{\epsilon}}\right \rceil $
+% 
+% \subsection{Exercise}
+% 
+% \begin{comment}
+% \section{Introduction}
+% There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable.
+% There is another theory which states that this has already happened.
+% 
+% \begin{figure}[h!]
+% \centering
+% \includegraphics[scale=1.7]{universe}
+% \caption{The Universe}
+% \label{fig:universe}
+% \end{figure}
+% 
+% \section{Conclusion}
+% ``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+% \end{comment}
+% 
+% \bibliographystyle{plain}
+% \bibliography{references}
+% 
+% \end{document}
+% 
